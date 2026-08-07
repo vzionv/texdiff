@@ -1,0 +1,39 @@
+\documentclass{article}
+\begin{document}
+\section{Overview}\label{sec:overview}
+A reusable configuration file keeps routine processing predictable and easy to inspect.
+
+A new validation step reports the selected profile before processing begins.
+
+\begin{figure}\includegraphics{new-preview.pdf}\caption{A changed preview asset that is ignored.}\end{figure}
+
+\section{Workflow}
+The process has four stages. Each stage emits a status message and a validation result.
+
+\begin{itemize}
+\item Read the input file.
+\item Normalize the values.
+\item Validate the selected profile.
+\end{itemize}
+
+The normalized score is $s = q/t$.
+
+\begin{equation}
+R = \frac{accepted}{received + skipped}
+\end{equation}
+
+\begin{table}
+\caption{Default settings after revision}
+\begin{tabular}{lrr}
+Setting & Minimum & Maximum \\
+Retries & 1 & 5 \\
+Workers & 2 & 12 \\
+Cache & 0 & 1 \\
+\end{tabular}
+\end{table}
+
+A compact process remains suitable for local use and scheduled jobs.
+
+\section{Summary}
+The revised process includes explicit validation and a larger worker range.
+\end{document}

@@ -1,0 +1,35 @@
+\documentclass{article}
+\begin{document}
+\section{Configuration Guide}\label{sec:guide}
+This guide describes a small configuration workflow. Clear defaults make each change easy to review.
+
+The first draft stores settings in one local file and validates the values before processing.
+
+\begin{figure}\includegraphics{old-preview.pdf}\caption{An ignored preview asset.}\end{figure}
+
+\section{Processing Steps}
+The workflow has three stages. Each stage records a short status message.
+
+\begin{itemize}
+\item Read the configuration file.
+\item Normalize the values.
+\end{itemize}
+
+The normalized score is $s = p/r$.
+
+\begin{equation}
+R = \frac{accepted}{received}
+\end{equation}
+
+\begin{table}
+\caption{Default settings}
+\begin{tabular}{lrr}
+Setting & Minimum & Maximum \\
+Retries & 1 & 3 \\
+Workers & 2 & 8 \\
+\end{tabular}
+\end{table}
+
+\section{Summary}
+The first draft is suitable for a small local workflow.
+\end{document}

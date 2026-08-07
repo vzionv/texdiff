@@ -1,0 +1,57 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "texdiff"
+version = "2.0.0"
+description = "Fast, interactive side-by-side HTML and PDF diffs for LaTeX documents."
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+authors = [{name = "vzionv"}]
+dependencies = ["reportlab>=4.2,<5", "rapidfuzz>=3.9,<4"]
+keywords = ["latex", "diff", "pdf", "html", "git", "text-processing"]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Environment :: Console",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Text Processing :: Markup :: LaTeX",
+]
+
+[project.optional-dependencies]
+weasyprint = ["weasyprint>=68"]
+browser = ["playwright>=1.50"]
+dev = ["pytest>=8", "pytest-cov>=5", "pypdf>=5", "build>=1.2", "wheel>=0.43"]
+
+[project.scripts]
+texdiff = "texdiff.cli:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+texdiff = ["assets/*.toml", "assets/*.css", "assets/*.js"]
+
+[tool.pytest.ini_options]
+addopts = "-ra --strict-markers --strict-config"
+testpaths = ["tests"]
+
+[tool.coverage.run]
+branch = true
+source = ["texdiff"]
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = true
+fail_under = 80

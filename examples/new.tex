@@ -1,0 +1,39 @@
+\documentclass{article}
+\begin{document}
+\section{Configuration Guide}\label{sec:guide}
+This guide describes a reusable configuration workflow. Explicit defaults make each change easy to review.
+
+The revised draft validates values before processing and records the selected profile.
+
+\begin{figure}\includegraphics{new-preview.pdf}\caption{A changed preview asset that is ignored.}\end{figure}
+
+\section{Processing Steps}
+The workflow has four stages. Each stage records a short status message and a validation result.
+
+\begin{itemize}
+\item Read the configuration file.
+\item Normalize the values.
+\item Validate the selected profile.
+\end{itemize}
+
+The normalized score is $s = q/t$.
+
+\begin{equation}
+R = \frac{accepted}{received + skipped}
+\end{equation}
+
+\begin{table}
+\caption{Default settings after revision}
+\begin{tabular}{lrr}
+Setting & Minimum & Maximum \\
+Retries & 1 & 5 \\
+Workers & 2 & 12 \\
+Cache & 0 & 1 \\
+\end{tabular}
+\end{table}
+
+The first draft stores settings in one local file and validates the values before processing.
+
+\section{Summary}
+The revised draft supports a larger local workflow with explicit validation.
+\end{document}

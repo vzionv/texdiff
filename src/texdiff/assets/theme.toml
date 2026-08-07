@@ -1,0 +1,34 @@
+# Developer-facing visual configuration for both HTML and native PDF output.
+# Edit this file in the source tree and rebuild/reinstall the project.
+
+[colors]
+page_background = "#ffffff"
+panel = "#f6f8fa"
+panel_alt = "#eef2f6"
+border = "#c8d1dc"
+text = "#17202a"
+muted = "#66717e"
+added_background = "#eefaf1"
+added_strong = "#ccefd4"
+deleted_background = "#fff2f1"
+deleted_strong = "#ffd8d5"
+modified_background = "#edf3f8"
+moved_background = "#eef6ff"
+search_highlight = "#ffe8a3"
+annotation_highlight = "#dcecff"
+focus = "#2563eb"
+
+[html]
+font_size_px = 14
+line_height = 1.55
+sticky_header = true
+default_view = "context"
+
+[pdf]
+page_size = "A4"
+orientation = "landscape"
+body_font_size = 7.7
+heading_font_size = 8.8
+title_font_size = 9.6
+line_height_multiplier = 1.38
+margin_points = 24.0

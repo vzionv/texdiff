@@ -1,0 +1,55 @@
+name: CI
+on: [push, pull_request]
+
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            python-version: "3.10"
+          - os: ubuntu-latest
+            python-version: "3.12"
+          - os: windows-latest
+            python-version: "3.12"
+          - os: macos-latest
+            python-version: "3.12"
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install project
+        run: python -m pip install -e ".[dev]"
+      - name: Compile
+        run: python -m compileall -q src tests scripts
+      - name: Test with coverage
+        if: runner.os == 'Linux' && matrix.python-version == '3.12'
+        run: python -m pytest --cov=texdiff --cov-report=term-missing --cov-fail-under=80
+      - name: Test
+        if: runner.os != 'Linux' || matrix.python-version != '3.12'
+        run: python -m pytest
+      - name: Native PDF smoke test
+        run: python -m texdiff tests/fixtures/old.tex tests/fixtures/new.tex --extractor builtin --pdf-engine reportlab -o smoke.pdf
+      - name: Verify PDF and HTML
+        shell: bash
+        run: |
+          python -c "from pathlib import Path; p=Path('smoke.pdf'); h=Path('smoke.html'); assert p.read_bytes()[:5] == b'%PDF-' and p.stat().st_size > 1000 and '<!doctype html>' in h.read_text(encoding='utf-8')"
+          rm -f smoke.pdf smoke.html
+      - name: Check public release tree
+        if: runner.os == 'Linux' && matrix.python-version == '3.12'
+        run: python scripts/check_public_release.py
+      - name: Run structured benchmark
+        if: runner.os == 'Linux' && matrix.python-version == '3.12'
+        shell: bash
+        run: |
+          python scripts/benchmark.py --sections 8 --no-pdf --output-dir "$RUNNER_TEMP/texdiff-benchmark" > "$RUNNER_TEMP/benchmark.json"
+          python -c "import json, pathlib; data=json.loads(pathlib.Path(r'$RUNNER_TEMP/benchmark.json').read_text()); assert all(data['blocks'][side][kind] > 0 for side in ('old', 'new') for kind in ('heading', 'paragraph', 'list-item', 'math', 'table')); assert all(item['rows'] >= 3 and item['columns'] == 3 and item['simple'] for side in ('old', 'new') for item in data['tables'][side]); assert all(data['changes'][kind] > 0 for kind in ('modified', 'added', 'deleted', 'moved'))"
+      - name: Build wheel
+        if: runner.os == 'Linux' && matrix.python-version == '3.12'
+        run: python -m pip wheel . --no-deps --no-build-isolation --wheel-dir dist
+      - name: Check wheel contents
+        if: runner.os == 'Linux' && matrix.python-version == '3.12'
+        run: python scripts/check_public_release.py --wheel "$(find dist -name '*.whl' -print -quit)"

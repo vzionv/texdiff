@@ -11,7 +11,7 @@ mkdir -p .build-output/demo .build-output/benchmark
 "$PYTHON" -m compileall -q src tests scripts
 if command -v node >/dev/null 2>&1; then node --check src/texdiff/assets/report.js; fi
 PYTHONPATH=src "$PYTHON" -m pytest --cov=texdiff --cov-report=term-missing --cov-fail-under=80
-"$PYTHON" -m pip wheel . --no-deps --no-build-isolation --wheel-dir dist
+"$PYTHON" -m pip wheel . --no-deps --wheel-dir dist
 cp dist/texdiff-*.whl .build-output/
 
 PYTHONPATH=src "$PYTHON" -m texdiff \

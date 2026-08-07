@@ -54,7 +54,7 @@ jobs:
           python -c "import json, pathlib; data=json.loads(pathlib.Path(r'$RUNNER_TEMP/benchmark.json').read_text()); assert all(data['blocks'][side][kind] > 0 for side in ('old', 'new') for kind in ('heading', 'paragraph', 'list-item', 'math', 'table')); assert all(item['rows'] >= 3 and item['columns'] == 3 and item['simple'] for side in ('old', 'new') for item in data['tables'][side]); assert all(data['changes'][kind] > 0 for kind in ('modified', 'added', 'deleted', 'moved'))"
       - name: Build wheel
         if: runner.os == 'Linux' && matrix.python-version == '3.12'
-        run: python -m pip wheel . --no-deps --no-build-isolation --wheel-dir dist
+        run: python -m pip wheel . --no-deps --wheel-dir dist
       - name: Check wheel contents
         if: runner.os == 'Linux' && matrix.python-version == '3.12'
         run: python scripts/check_public_release.py --wheel "$(find dist -name '*.whl' -print -quit)"

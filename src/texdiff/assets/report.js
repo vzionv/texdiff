@@ -192,7 +192,7 @@
     toggle.setAttribute("aria-label", annotationType === "row" ? "Expand row note" : "Expand text note");
     toggle.dataset.annId = annIdStr;
     toggle.dataset.annotationType = annotationType;
-    toggle.textContent = annotationType === "row" ? "Row" : "Note";
+    toggle.textContent = annotationType === "row" ? "RN" : "BN";
     return toggle;
   }
 

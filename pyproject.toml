@@ -10,7 +10,7 @@ readme = "README.md"
 requires-python = ">=3.10"
 license = {text = "MIT"}
 authors = [{name = "vzionv"}]
-dependencies = ["reportlab>=4.2,<5", "rapidfuzz>=3.9,<4"]
+dependencies = ["reportlab>=4.2,<5", "rapidfuzz>=3.9,<4", "tomli>=2.0; python_version < '3.11'"]
 keywords = ["latex", "diff", "pdf", "html", "git", "text-processing"]
 classifiers = [
   "Development Status :: 4 - Beta",
